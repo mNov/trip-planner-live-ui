@@ -16,11 +16,8 @@ var map_canvas_obj = document.getElementById('map-canvas');
 
 var map = new google.maps.Map(map_canvas_obj, mapOptions);
 
-// add the marker to the map
-var marker = new google.maps.Marker({
-  position: myLatlng,
-  title: 'Hello World!'
-});
+
+var markers = [];
 
 function initialize_gmaps() {
 
@@ -51,13 +48,14 @@ function initialize_gmaps() {
 
 
   // draw some locations on the map
-  function drawLocation(location, opts) {
+function drawLocation(location, opts) {
     if (typeof opts !== 'object') {
       opts = {};
     }
     opts.position = new google.maps.LatLng(location[0], location[1]);
     opts.map = map;
-    marker = new google.maps.Marker(opts);
+    var marker = new google.maps.Marker(opts);
+    markers.push(marker);
   }//drawLocation
 
 $(document).ready(function() {

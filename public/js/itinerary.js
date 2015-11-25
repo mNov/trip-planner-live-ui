@@ -15,12 +15,27 @@ $(document).ready(function() {
         })[0];
         var location = thisHotel.place[0].location;
         //draw it on the map
-        marker.setMap(null);
+        
+        //Remove the previous hotel marker:
+        if (markers.length > 0) {
+            //find hotel marker (as opposed to other types of markers)
+            var oldHotelMarker = markers.filter(function(marker){
+                return marker.icon === '/images/lodging_0star.png';
+            })[0];
+            //console.dir(oldHotelMarker);
+            if (oldHotelMarker) {
+                var index = markers.indexOf(oldHotelMarker);            
+                markers[index].setMap(null);
+                markers.splice(index,1); //remove marker from markers
+            }
+        }
+
         drawLocation(location, {
-            icon: '/images/lodging_0star.png'
+            icon: '/images/lodging_0star.png',
+            title: hotelName
         })
-        //TODO: only allow one hotel to be added at a time
     
+
     });
 
     $('#restaurantbtn').click(function(){
@@ -28,14 +43,18 @@ $(document).ready(function() {
         var restaurantDiv = itineraryItemDiv + restaurantName + '</span>' + xButton + '</div>';
         $("#restaurants").append(restaurantDiv);
 
-        //get hotel location from name
+        //get restaurant location from name
         var thisRestaurant = all_restaurants.filter(function(restaurant){
             return restaurant.name === restaurantName;
         })[0];
+
+        //TODO: don't allow the same restaurant to be added more than once
+
         var location = thisRestaurant.place[0].location;
         //draw it on the map
         drawLocation(location, {
-            icon: '/images/restaurant.png'
+            icon: '/images/restaurant.png',
+            title: restaurantName
         });
     
     });
@@ -45,16 +64,29 @@ $(document).ready(function() {
         var activityDiv = itineraryItemDiv + activityName + '</span>' + xButton + '</div>';
         $("#activities").append(activityDiv);
 
-        //get hotel location from name
+        //get activity location from name
         var thisActivity = all_activities.filter(function(activity){
             return activity.name === activityName;
         })[0];
+
+        //TODO: don't allow the same activity to be added more than once
+
         var location = thisActivity.place[0].location;
         //draw it on the map
         drawLocation(location, {
-            icon: '/images/star-3.png'
+            icon: '/images/star-3.png',
+            title: activityName
         });
     
+    });
+
+
+    $('body').delegate('.remove', 'click', function(){
+        //a .remove button's parent is an itinerary-item 
+        $(this).parent().remove();
+
+        //TODO: remove corresponding marker from map
+        //maybe find a title that matches the span content
     });
 
 });
