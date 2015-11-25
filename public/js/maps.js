@@ -16,18 +16,13 @@ var map_canvas_obj = document.getElementById('map-canvas');
 
 var map = new google.maps.Map(map_canvas_obj, mapOptions);
 
+// add the marker to the map
+var marker = new google.maps.Marker({
+  position: myLatlng,
+  title: 'Hello World!'
+});
+
 function initialize_gmaps() {
-
-
-
-
-  // add the marker to the map
-  var marker = new google.maps.Marker({
-    position: myLatlng,
-    title: 'Hello World!'
-  });
-
-
 
   var hotelLocation = [40.705137, -74.007624];
   var restaurantLocations = [
@@ -62,7 +57,7 @@ function initialize_gmaps() {
     }
     opts.position = new google.maps.LatLng(location[0], location[1]);
     opts.map = map;
-    var marker = new google.maps.Marker(opts);
+    marker = new google.maps.Marker(opts);
   }//drawLocation
 
 $(document).ready(function() {
