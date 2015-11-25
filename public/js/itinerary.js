@@ -10,18 +10,18 @@ $(document).ready(function() {
         $("#hotels").html(hotelDiv);
     
         //get hotel location from name
-        var thisHotel = all_hotels.filter(function(hotel){
+        var thisHotel = all_hotels.find(function(hotel){
             return hotel.name === hotelName;
-        })[0];
+        });
         var location = thisHotel.place[0].location;
         //draw it on the map
         
         //Remove the previous hotel marker:
         if (markers.length > 0) {
             //find hotel marker (as opposed to other types of markers)
-            var oldHotelMarker = markers.filter(function(marker){
+            var oldHotelMarker = markers.find(function(marker){
                 return marker.icon === '/images/lodging_0star.png';
-            })[0];
+            });
             //console.dir(oldHotelMarker);
             if (oldHotelMarker) {
                 var index = markers.indexOf(oldHotelMarker);            
@@ -44,9 +44,9 @@ $(document).ready(function() {
         $("#restaurants").append(restaurantDiv);
 
         //get restaurant location from name
-        var thisRestaurant = all_restaurants.filter(function(restaurant){
+        var thisRestaurant = all_restaurants.find(function(restaurant){
             return restaurant.name === restaurantName;
-        })[0];
+        });
 
         //TODO: don't allow the same restaurant to be added more than once
 
@@ -65,9 +65,9 @@ $(document).ready(function() {
         $("#activities").append(activityDiv);
 
         //get activity location from name
-        var thisActivity = all_activities.filter(function(activity){
+        var thisActivity = all_activities.find(function(activity){
             return activity.name === activityName;
-        })[0];
+        });
 
         //TODO: don't allow the same activity to be added more than once
 
